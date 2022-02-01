@@ -1,0 +1,19 @@
+.banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .ven {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .cen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    justify-self: center;
+  }

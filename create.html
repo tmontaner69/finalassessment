@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mangan da Kita</title>
+
+    
+    <link rel="stylesheet" href="create.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    
+
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+       
+        <a class="navbar" style="padding: 20px;" href="home.html">
+          <img src="logo.png" alt="Mangan da Kita" width="50" height="50">
+        </a>
+      
+
+  </nav>
+    <div class="ven">
+        <div>
+            <h2 class="to-center"> Create an Account</h2>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-control" id="unInput" >
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" id="passInput" >
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-control" id="fnameInput" >
+
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lnameInput" >
+          </div>
+
+
+          <div class="mb-3">
+            <label class="form-label">Contact Number</label>
+            <input type="number" class="form-control" id="numInput" >
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" id="emailInput" >
+          </div>
+
+          <div class="mb-3">
+            <button class="btn btn-primary w-100" type="submit" id="sbt_btn">Submit form</button>
+          </div>
+
+          <div class="mb-3">
+            <a class="btn btn-secondary w-100" type="submit" id="home_btn" href="login.html">Login</a>
+          </div>
+          
+    </div>
+    
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries 
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+  apiKey: "AIzaSyAUWDs3nWJS_THL9QFvgvAwBCpPq6HBLwk",
+  authDomain: "sketchcature.firebaseapp.com",
+  databaseURL: "https://sketchcature-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sketchcature",
+  storageBucket: "sketchcature.appspot.com",
+  messagingSenderId: "614815230382",
+  appId: "1:614815230382:web:2616cbab4676c0d7e1803f"
+};
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        import { getDatabase, ref, set, child, get, update, remove } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-database.js";
+
+        const db = getDatabase();
+
+
+        //============
+
+            const username = document.getElementById('unInput');
+            const pass = document.getElementById('passInput');
+            const firstname = document.getElementById('fnameInput');
+            const lastname = document.getElementById('lnameInput');
+            const number = document.getElementById('numInput');
+            const email = document.getElementById('emailInput');
+            const submit = document.getElementById('sbt_btn')
+
+
+        
+
+            //==========VALIDATE
+
+                function onSpaces(str){
+                    return str === null || str.match (/^ *$/) !==null;
+                }
+
+                function Validate(){
+
+                    let nameregex = /^[a-zA-z\s]+$/;
+                    let emailregex = /^[a-zA-Z0-9]+@(gmail|yahoo|outlook)\.com$/;
+                    let userregex = /^[a-zA-Z0-9]{5,}$/;
+
+
+                    if(onSpaces(username.value) || onSpaces(pass.value) || onSpaces(firstname.value) || onSpaces(lastname.value) || onSpaces(number.value) || onSpaces(email.value) ) {
+                        alert("Do Not Leave any blank spaces.");
+                        return false;
+                    }
+
+                    if(!nameregex.test(firstname.value)){
+                        alert("The name should only contain alphabets!");
+                        return false;
+                    }
+
+                    if(!nameregex.test(lastname.value)){
+                        alert("The name should only contain alphabets!");
+                        return false;
+                    }
+                    if(!emailregex.test(email.value)){
+                        alert("Enter a valid Email Address");
+                        return false;
+                    }
+                    if(!userregex.test(username.value)){
+                        alert("Username can only be alphanumer\n username must be atleast 5 characters \n username cannot containe less than 5 characters");
+                        return false;
+                    }
+
+                    return true;
+                    
+
+                }
+
+            //==============
+
+                function CreateUser(){
+                    if(!Validate()){
+                        return;
+                    }
+
+                    const dbref = ref(db);
+
+                    get(child(dbref, "UsersList/" + username.value)).then((snapshot)=>{
+                        if(snapshot.exists()){
+                            alert("Account already Existed");
+                        }
+                        else{
+                            set(ref(db, "UsersList/" + username.value),
+                            {
+                                username: username.value,
+                                firstname: firstname.value,
+                                lastname: lastname.value,
+                                number: number.value,
+                                email: email.value,
+                                password: encPassword(),
+                            })
+                            .then(()=>{
+                                alert("User created Successfully")
+                            })
+                            .catch((error)=>{
+                                alert("error"+error);
+                            })
+                        }
+                    })
+                }
+
+            //================
+                
+                function encPassword(){
+                    var pass12 = CryptoJS.AES.encrypt(pass.value, pass.value);
+                    return pass12.toString();
+                }
+
+
+                  //============== WINDOWS ON LOAD
+
+          window.onload = function(){
+            getUsername();
+            if(currentuser == null){
+              userlink.innerText = "Create New Account";
+              userlink.classList.replace("nav-link", "btn");
+              userlink.classList.add("btn-primary");
+              userlink.href = "create.html";
+
+              signoutlink.innerText = "Login";
+              signoutlink.classList.replace("nav-link","btn");
+              signoutlink.classList.add("btn-success");
+              signoutlink.href = "login.html"
+            }
+
+            else{
+              userlink.innerText = currentuser.username;
+              header.innerText = "welcome " + currentuser.firstname;
+              userlink.classList.replace("btn", "nav-link");
+              userlink.classList.add("btn-primary");
+              userlink.href = "create.html";
+
+              signoutlink.innerText = "Sign Out";
+              signoutlink.classList.replace("btn","nav-link");
+              signoutlink.classList.add("btn-success");
+              signoutlink.href = "javascript:Signout()";
+            }
+          }
+
+          
+            //=============SUBMIT
+
+                submit.addEventListener('click', CreateUser);
+
+      </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,15 @@
+.ven {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    margin: auto;
+    padding-left: 30%;
+    padding-right: 30%;
+  }
+  
+  .to-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SketchCature</title>
+
+    <link rel="stylesheet" href="home.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+       
+    <a class="navbar" style="padding: 20px;" href="admin.html">
+      <img src="logo.png" alt="Mangan da Kita" width="50" height="50">
+    </a>
+  
+
+<div class="container-fluid">
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="admin.html">Home</a> 
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="Inventory.html">Inventory</a>
+      </li>
+      
+
+      <li class="nav-item">
+        <a class="nav-link active" href="add.html">Add Stocks</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="contactlogin.html">Contact Information</a>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link" href="techstacklogin.html">Technology Stack</a>
+      </li>
+    </ul>
+
+    <form class="d-flex">
+  
+    </form>
+
+    <form class="from-inline my-2 my-lg-0">
+
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item mx-1">
+          <a id="userlink" class="nav-link" href="">Username</a>
+        </li>
+
+        <li class="nav-item mx-1">
+          <a id="signoutlink" class="nav-link" href="">Sign out</a>
+        </li>
+      </ul>
+      
+    </form>
+    
+  </div>
+</div>
+</nav>
+
+
+      <section class="container content-section">
+        <h3 class="section-header mb-3">Inventory</h3>
+ 
+
+      <div class="container mt-3">
+        <table class="table table-striped">
+            <thead>
+                <th>Sno</th>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Category</th>
+                <th>User</th>
+            </thead>
+            <tbody id="tbody1"></tbody>
+        </table>
+    </div>
+
+      <!--------------------------- Add New Item------------------------------->
+      
+    <br> </section><br>
+
+  <section class="container content-section">
+    <h3 class="section-header mb-3">Add New Item</h3>
+
+    <div class="container-xxl" style="padding-inline: 25%; ">
+
+      <!-- <div class="col-md-3">
+        <label for="validationDefault01" class="form-label">Order Number</label>
+        <input type="text" class="form-control" id="orderInput" value="000" disabled>
+      </div> -->
+
+
+ <div class="row mb-3"> 
+
+
+  
+
+          <div class="col-md-6">
+            <label for="validationDefault02" class="form-label">Item Name </label>
+            <input type="text" class="form-control" id="in"  required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="validationDefault03" class="form-label">Item Code </label>
+            <input type="text" class="form-control" id="ic"  required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="validationDefault04" class="form-label">Item Price </label>
+            <input type="text" class="form-control" id="ip"  required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="validationDefault05" class="form-label">Pcs</label>
+            <input type="text" class="form-control" id="iq" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="validationDefault06" class="form-label">Category</label>
+            <select class="form-select" id="icat" required>
+                <option selected disabled value="">Choose...</option>
+                <option value ="Tshirt">Tshirt</option>
+                <option value = "Mugs">Mugs</option>
+                <option value = "Keychain">Keychain</option>  
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label for="validationDefault02" class="form-label">User Name </label>
+            <input type="text" class="form-control" id="un"  required>
+          </div>
+        
+    </div>
+   
+    <button class="btn btn-primary w-100 mb-3" type="submit" id="add">Add</button>
+    <button class="btn btn-primary w-100 mb-3" type="submit" id="select">Select Code</button>
+    <button class="btn btn-primary w-100 mb-3" type="submit" id="update">Update</button>
+    <button class="btn btn-primary w-100 mb-3" type="submit" id="delete">Delete</button>
+
+  </section>
+      
+      
+      
+      <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+  apiKey: "AIzaSyAUWDs3nWJS_THL9QFvgvAwBCpPq6HBLwk",
+  authDomain: "sketchcature.firebaseapp.com",
+  databaseURL: "https://sketchcature-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sketchcature",
+  storageBucket: "sketchcature.appspot.com",
+  messagingSenderId: "614815230382",
+  appId: "1:614815230382:web:2616cbab4676c0d7e1803f"
+};
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        import { getDatabase, ref, set, child, get, update, remove, onValue } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-database.js";
+
+        const db = getDatabase();
+
+
+
+        //=================================REFERENCES
+
+          
+          var itemName = document.getElementById('in');
+          var itemCode = document.getElementById('ic');
+          var itemPrice = document.getElementById('ip');
+          var itemQuantity = document.getElementById('iq');
+          var itemCategory = document.getElementById('icat');
+          var userN = document.getElementById('un');
+
+          var addbtn = document.getElementById('add');
+          var updatebtn = document.getElementById('update');
+          var deletebtn = document.getElementById('delete');
+          var selectbtn = document.getElementById('select');
+
+        
+//==============ADD NEW================= 
+
+        function InsertData(){
+          set(ref(db, "NewOrders/"+ itemCode.value),{
+
+              
+              iname: itemName.value,
+              icode: itemCode.value,
+              iprice: itemPrice.value,
+              iquan: itemQuantity.value,
+              icat: itemCategory.value,
+              uname: userN.value 
+          })
+
+          .then(()=>{
+              alert("Item Added Successfully");
+          })
+          .catch((error)=>{
+              alert("error"+ error);
+          })
+      }
+         
+// ========== Select Code =========================
+
+function SelectData(){
+                const dbref = ref(db);
+
+                get(child(dbref,"NewOrders/" + itemCode.value)).then((snapshot)=>{
+                    if(snapshot.exists()){
+                     
+                        itemName.value = snapshot.val().iname;
+                        itemPrice.value = snapshot.val().iprice;
+                        itemQuantity.value = snapshot.val().iquan;
+                        itemCategory.value = snapshot.val(). icat;
+                        userN.value = snapshot.val().uname;
+                    }
+                    else{
+                        alert("No data found");
+                    }
+                })
+                .catch((error)=>{
+                    alert("error"+ error);
+                });
+            }
+
+// ========== Update =========================
+
+        function UpdateData(){
+                update(ref(db, "NewOrders/"+itemCode.value),{
+             
+              iname: itemName.value,
+              icode: itemCode.value,
+              iprice: itemPrice.value,
+              iquan: itemQuantity.value,
+              icat: itemCategory.value,
+              uname: userN.value
+                })
+
+                .then(()=>{
+                    alert("data updated successfully");
+                })
+                .catch((error)=>{
+                    alert("error"+ error);
+                })
+            }
+// ========== Delete=========================
+
+            function DeleteData(){
+                remove(ref(db, "NewOrders/"+itemCode.value),{
+                
+                })
+
+                .then(()=>{
+                    alert("data removed successfully");
+                })
+                .catch((error)=>{
+                    alert("error"+ error);
+                })
+            }
+
+// ==========  =========================
+
+          addbtn.addEventListener('click', InsertData);
+          selectbtn.addEventListener('click', SelectData);
+          deletebtn.addEventListener('click', DeleteData);
+          updatebtn.addEventListener('click', UpdateData);
+
+
+
+        //==================TABLE
+
+        var stdNo = 0;
+            var tbody = document.getElementById('tbody1')
+
+            function AddItemToTable(name,code,category,price, quantity, user){
+                let trow = document.createElement("tr");
+                let td1 = document.createElement('td');
+                let td2 = document.createElement('td');
+                let td3 = document.createElement('td');
+                let td4 = document.createElement('td');
+                let td5 = document.createElement('td');
+                let td6 = document.createElement('td');
+                let td7 = document.createElement('td');
+
+                td1.innerHTML = ++stdNo;
+                td2.innerHTML = name;
+                td3.innerHTML = code;
+                td4.innerHTML = category;
+                td5.innerHTML = price;
+                td6.innerHTML = quantity;
+                td7.innerHTML = user;
+
+                trow.appendChild(td1);
+                trow.appendChild(td2);
+                trow.appendChild(td3);
+                trow.appendChild(td4);
+                trow.appendChild(td5);
+                trow.appendChild(td6);
+                trow.appendChild(td7);
+
+                tbody.appendChild(trow);
+            }
+
+            function AddAllItemsToTable(NewOrders){
+                stdNo=0;
+                tbody.innerHTML=" ";
+                NewOrders.forEach(element => {
+                    AddItemToTable(element.iname, element.icode, element.iprice, element.iquan, element.icat, element.uname)
+                });
+            }
+
+  //===========getData from Firebase ===========================
+
+  function GetAllDataOnce(){
+
+const dbref = ref(db);
+
+get(child(dbref,"NewOrders/"))
+.then((snapshot)=>{
+    var orders = [];
+
+        snapshot.forEach(childSnapshot => {
+            orders.push(childSnapshot.val());
+        });
+
+    AddAllItemsToTable(orders);
+   
+})
+}
+
+//============REALTIME GET DATA=============
+
+function GetAllDataRealttime(){
+
+const dbref = ref(db,"NewOrders/");
+
+onValue(dbref,(snapshot)=>{
+    var orders = [];
+
+        snapshot.forEach(childSnapshot => {
+            orders.push(childSnapshot.val());
+        });
+
+    AddAllItemsToTable(orders);
+})
+}
+
+window.onload = GetAllDataRealttime;
+
+
+
+
+
+      </script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+        
+
+        
+        <footer class="main-footer">
+          <div class="container main-footer-container">
+              
+              
+          </div>
+      </footer>
+
+
+
+
+      
+</body>
+</html>
